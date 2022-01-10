@@ -36,20 +36,46 @@ class Tableau extends Phaser.Scene {
     //Raquettes
         this.gauche = this.physics.add.sprite(25, 200,'carre').setOrigin(0, 0);
         this.gauche.setDisplaySize(20,100);
+        this.gauche.setVelocityY(0);
         this.gauche.body.setAllowGravity(false);
         this.gauche.setImmovable(true);
 
         this.droite = this.physics.add.sprite(955, 200,'carre').setOrigin(0, 0);
         this.droite.setDisplaySize(20,100);
+        this.droite.setVelocityY(0);
         this.droite.body.setAllowGravity(false);
         this.droite.setImmovable(true);
 
+        this.initKeyboard();
     }
 
     initKeyboard(){
 
     }
 
+    initKeyboard() {
+        let me = this;
+        this.input.keyboard.on('keyup', function (kevent) {
+            switch (kevent.keyCode) {
+                case Phaser.Input.Keyboard.KeyCodes.Z:
+                    me.gauche.setVelocityY(0);
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.I:
+                    me.droite.setVelocityY(0);
+                    break;
+            }
+        })
+        this.input.keyboard.on('keydown', function (kevent) {
+            switch (kevent.keyCode) {
+                case Phaser.Input.Keyboard.KeyCodes.Z:
+                    me.gauche.setVelocityY(100);
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.I:
+                    me.droite.setVelocityY(100);
+                    break;
+            }
+        })
+    }
     update() {
         if(this.balle.x>this.largeur){
             this.balle.x=0;
