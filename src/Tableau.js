@@ -33,7 +33,7 @@ class Tableau extends Phaser.Scene {
         this.physics.add.collider(this.balle,this.bas);
         this.physics.add.collider(this.balle,this.haut);
 
-    //Raquettes
+    //Raquettes balle/murs
         this.gauche = this.physics.add.sprite(25, 200,'carre').setOrigin(0, 0);
         this.gauche.setDisplaySize(20,100);
         this.gauche.setVelocityY(0);
