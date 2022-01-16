@@ -28,3 +28,21 @@ a:visited{
 canvas{
     outline: 1px solid #333;
 }
+
+.player_1_score {
+    height: 50px;
+    width: 50px;
+    color: chartreuse;
+    position: fixed;
+    left: 30vw;
+    margin-top: 30px;
+}
+
+.player_2_score {
+    height: 50px;
+    width: 50px;
+    color: chartreuse;
+    position: fixed;
+    left: 70vw;
+    margin-top: 30px;
+}
