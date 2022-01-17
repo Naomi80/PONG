@@ -6,6 +6,7 @@ class Tableau extends Phaser.Scene {
 
     }
 
+
     create() {
         this.hauteur=500;
         this.largeur=1000;
