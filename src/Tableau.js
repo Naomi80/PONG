@@ -13,9 +13,11 @@ class Tableau extends Phaser.Scene {
     //Balle
        this.balle = this.physics.add.sprite(this.largeur/2, this.hauteur/2, 'cercle').setOrigin(0, 0);
        this.balle.setDisplaySize(20,20);
-       this.balle.body.setBounce(1.2,1.2);
-       this.balle.setVelocityX(Phaser.Math.Between(200,-200));
-       this.balle.body.setMaxVelocity(500);
+       this.balle.body.setBounce(1.1,1.1);
+       this.balle.setVelocityX(Phaser.Math.Between(-200,200));
+        this.balle.setVelocityY(Phaser.Math.Between(50,100));
+        this.balle.body.setMaxVelocityX(300);
+       this.balle.body.setMaxVelocityY(400);
 
     //Mur haut
         this.haut = this.physics.add.sprite(0, 0,'carre').setOrigin(0, 0);
@@ -46,8 +48,12 @@ class Tableau extends Phaser.Scene {
         this.droite.body.setAllowGravity(false);
         this.droite.setImmovable(true);
 
+        let me = this;
         //Collision raquettes/balle
-        this.physics.add.collider(this.balle,this.gauche);
+        this.physics.add.collider(this.balle,this.gauche, function(){
+            console.log("touche droit");
+            me.rebond(me.droite);
+        });
         this.physics.add.collider(this.balle,this.droite);
 
         //Collision raquettes/murs
@@ -59,10 +65,27 @@ class Tableau extends Phaser.Scene {
         this.initKeyboard();
     }
 
-    initKeyboard(){
 
+    rebond(raquette){
+
+
+        let me=this;
+
+        console.log(raquette.y)
+        console.log(me.balle.y)
+        console.log((me.balle.y)-(raquette.y))
+
+        let hauteurRaquette = raquette.displayHeight;
+
+        let positionRelativeRaquette =(this.balle.y-raquette.y);
+
+        positionRelativeRaquette = (positionRelativeRaquette/hauteurRaquette);
+
+        positionRelativeRaquette = (positionRelativeRaquette*2-1);
+        console.log(positionRelativeRaquette);
+
+        this.balle.setVelocityY( this.balle.body.velocity.y + positionRelativeRaquette * hauteurRaquette)
     }
-
     initKeyboard() {
         let me = this;
         this.input.keyboard.on('keyup', function (kevent) {
@@ -90,7 +113,7 @@ class Tableau extends Phaser.Scene {
                     me.droite.setVelocityY(-300);
                     break;
                 case Phaser.Input.Keyboard.KeyCodes.X:
-                    me.gauche.setVelocityY(300);
+                   me.gauche.setVelocityY(300);
                     break;
                 case Phaser.Input.Keyboard.KeyCodes.N:
                     me.droite.setVelocityY(300);
@@ -110,6 +133,18 @@ class Tableau extends Phaser.Scene {
         }
         if(this.balle.y>this.hauteur) {
             this.balle.y = 0;
+        }
+        if (this.gauche.y<20){
+            this.gauche.y = 20
+        }
+        if (this.gauche.y>this.hauteur-110){
+            this.gauche.y =this.hauteur-110
+        }
+        if (this.droite.y<20){
+            this.droite.y = 20
+        }
+        if (this.droite.y>this.hauteur-110){
+            this.droite.y =this.hauteur-110
         }
 
     }
