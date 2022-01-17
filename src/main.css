@@ -28,21 +28,23 @@ a:visited{
 canvas{
     outline: 1px solid #333;
 }
-
-.player_1_score {
-    height: 50px;
-    width: 50px;
-    color: chartreuse;
-    position: fixed;
-    left: 30vw;
-    margin-top: 30px;
+#scores{
+    color: #ffffff;
+    font-size : 5vw;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
-.player_2_score {
-    height: 50px;
-    width: 50px;
-    color: chartreuse;
-    position: fixed;
-    left: 70vw;
-    margin-top: 30px;
+.score{
+    color:#0f0
+}
+.name{
+    font-size: 3vw;
+}
+
+#scores >* {
+    margin: 1vw;
 }
