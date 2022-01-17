@@ -67,32 +67,32 @@ class Tableau extends Phaser.Scene {
         let me = this;
         this.input.keyboard.on('keyup', function (kevent) {
             switch (kevent.keyCode) {
-                case Phaser.Input.Keyboard.KeyCodes.Z:
-                    me.gauche.setVelocityY(0);
-                    break;
-                case Phaser.Input.Keyboard.KeyCodes.I:
-                    me.droite.setVelocityY(0);
-                    break;
                 case Phaser.Input.Keyboard.KeyCodes.S:
                     me.gauche.setVelocityY(0);
                     break;
-                case Phaser.Input.Keyboard.KeyCodes.K:
+                case Phaser.Input.Keyboard.KeyCodes.J:
+                    me.droite.setVelocityY(0);
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.X:
+                    me.gauche.setVelocityY(0);
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.N:
                     me.droite.setVelocityY(0);
                     break;
             }
         })
         this.input.keyboard.on('keydown', function (kevent) {
             switch (kevent.keyCode) {
-                case Phaser.Input.Keyboard.KeyCodes.Z:
+                case Phaser.Input.Keyboard.KeyCodes.S:
                     me.gauche.setVelocityY(-300);
                     break;
-                case Phaser.Input.Keyboard.KeyCodes.I:
+                case Phaser.Input.Keyboard.KeyCodes.J:
                     me.droite.setVelocityY(-300);
                     break;
-                case Phaser.Input.Keyboard.KeyCodes.S:
+                case Phaser.Input.Keyboard.KeyCodes.X:
                     me.gauche.setVelocityY(300);
                     break;
-                case Phaser.Input.Keyboard.KeyCodes.K:
+                case Phaser.Input.Keyboard.KeyCodes.N:
                     me.droite.setVelocityY(300);
                     break;
             }
