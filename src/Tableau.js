@@ -6,7 +6,7 @@ class Tableau extends Phaser.Scene {
         this.load.image('carre', 'assets/carre.png');
         this.load.image('raquette', 'assets/raquette.png');
 
-        //this.load.audio('virale', 'assets/sounds/sound1.mp3')
+        this.load.audio('applause', 'assets/son/applause.mp3')
 
 
     }
@@ -16,8 +16,11 @@ class Tableau extends Phaser.Scene {
         this.hauteur=500;
         this.largeur=1000;
 
+        //Son
+        this.applause= this.sound.add('applause', {loop: false});
+        this.applause.volume = 2
 
-
+        //Fond
         this.bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
 
         //Balle
@@ -73,7 +76,6 @@ class Tableau extends Phaser.Scene {
 
         this.physics.add.collider(this.balle,this.droite);
 
-
         this.joueurGauche = new Joueur('Jean-Mi','joueurGauche');
         this.joueurDroite = new Joueur('Gyselle','joueurDroite');
         console.log(this.joueurGauche);
@@ -83,12 +85,8 @@ class Tableau extends Phaser.Scene {
         this.initKeyboard();
     }
 
-    creerSons() {
-        this.virale = this.sound.add('virale', {loop: false});
-        this.virale.volume = 0.1
-    }
 
-    //this.errorsou.play()
+
 
 
     rebond(raquette){
@@ -184,14 +182,13 @@ class Tableau extends Phaser.Scene {
         })
     }
     update() {
-
+        this.applause.play()
         if(this.balle.x>this.largeur){
             this.win(this.joueurGauche);
         }
         if(this.balle.x<0){
             this.win(this.joueurDroite);
         }
-
     }
 }
 
