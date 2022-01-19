@@ -18,7 +18,7 @@ class Tableau extends Phaser.Scene {
 
         //Son
         this.applause= this.sound.add('applause', {loop: false});
-        this.applause.volume = 2
+        this.applause.volume = 1
 
         //Fond
         this.bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
@@ -124,6 +124,7 @@ class Tableau extends Phaser.Scene {
         joueur.score ++;
         //alert('Le score est de '+this.joueurGauche.score+' a '+this.joueurDroite.score)
         this.balleAucentre();
+        this.applause.play()
     }
 
     initKeyboard() {
@@ -182,7 +183,7 @@ class Tableau extends Phaser.Scene {
         })
     }
     update() {
-        this.applause.play()
+
         if(this.balle.x>this.largeur){
             this.win(this.joueurGauche);
         }
