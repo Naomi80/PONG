@@ -1,8 +1,12 @@
 body{
     font-family: Arial, sans-serif;
     font-size: 12px;
-    background-color: #000000;
+    background-color: #7c1717;
     text-align: center;
+    background-image:url(https://img.freepik.com/free-vector/tennis-ball-illustration_153563-1393.jpg?size=338&ext=jpg);
+    background-position:100% 0%;
+
+
 }
 a{
     color: #808080;
