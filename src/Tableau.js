@@ -27,10 +27,10 @@ class Tableau extends Phaser.Scene {
         this.balle = this.physics.add.sprite(this.largeur/2, this.hauteur/2, 'cercle').setOrigin(0, 0);
         this.balle.setDisplaySize(20,20);
         this.balle.body.setBounce(1.1,1.1);
-        this.balle.setVelocityX(Phaser.Math.Between(-200,200));
-        this.balle.setVelocityY(Phaser.Math.Between(50,100));
-        this.balle.body.setMaxVelocityX(300);
-        this.balle.body.setMaxVelocityY(400);
+        this.balle.setVelocityX(Phaser.Math.Between(-600,600));
+        this.balle.setVelocityY(Phaser.Math.Between(300,350));
+        this.balle.body.setMaxVelocityX(500);
+        this.balle.body.setMaxVelocityY(700);
         this.balle.body.setAllowGravity(false)
 
         //Mur haut
