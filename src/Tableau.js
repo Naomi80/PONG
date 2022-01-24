@@ -148,41 +148,42 @@ class Tableau extends Phaser.Scene {
         this.input.keyboard.on('keydown', function (kevent) {
             switch (kevent.keyCode) {
                 case Phaser.Input.Keyboard.KeyCodes.S:
-                    if (me.gauche.y<me.haut.y + 20){
-                        me.gauche.setVelocityY(0)
-                    }
-                    else{
-                        me.gauche.setVelocityY(-300);
-                    }
+
+                    me.gauche.setVelocityY(-300);
+
                     break;
                 case Phaser.Input.Keyboard.KeyCodes.J:
-                    if (me.droite.y<me.haut.y + 20){
-                        me.droite.setVelocityY(0)
-                    }
-                    else{
-                        me.droite.setVelocityY(-300);
-                    }
+
+                    me.droite.setVelocityY(-300);
+
                     break;
                 case Phaser.Input.Keyboard.KeyCodes.X:
-                    if (me.gauche.y+100>me.bas.y){
-                        me.gauche.setVelocityY(0)
-                    }
-                    else {
-                        me.gauche.setVelocityY(300);
-                    }
+
+                    me.gauche.setVelocityY(300);
+
                     break;
                 case Phaser.Input.Keyboard.KeyCodes.N:
-                    if (me.droite.y+100>me.bas.y){
-                        me.droite.setVelocityY(0)
-                    }
-                    else {
-                        me.droite.setVelocityY(300);
-                    }
+
+                    me.droite.setVelocityY(300);
+
                     break;
             }
         })
     }
     update() {
+
+        if(this.gauche.y<this.haut.y+20){
+            this.gauche.y=this.haut.y+20
+        }
+        if(this.gauche.y>this.bas.y-100){
+            this.gauche.y=this.bas.y-100
+        }
+        if(this.droite.y<this.haut.y+20){
+            this.droite.y=this.haut.y+20
+        }
+        if(this.droite.y>this.bas.y-100){
+            this.droite.y=this.bas.y-100
+        }
 
         if(this.balle.x>this.largeur){
             this.win(this.joueurGauche);
