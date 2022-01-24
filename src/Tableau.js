@@ -7,9 +7,11 @@ class Tableau extends Phaser.Scene {
         this.load.image('raquette', 'assets/raquette.png');
 
         this.load.audio('applause', 'assets/son/applause.mp3')
+        this.load.audio('poc', 'assets/son/poc.mp3')
 
 
     }
+
 
 
     create() {
@@ -19,6 +21,8 @@ class Tableau extends Phaser.Scene {
         //Son
         this.applause= this.sound.add('applause', {loop: false});
         this.applause.volume = 1
+        this.poc= this.sound.add('poc', {loop: false});
+        this.poc.volume = 1
 
         //Fond
         this.bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
@@ -65,6 +69,7 @@ class Tableau extends Phaser.Scene {
         this.physics.add.collider(this.balle,this.gauche, function(){
             console.log("touche gauche");
             me.rebond(me.gauche);
+            this.son();
         });
 
         this.physics.add.collider(this.balle,this.gauche);
@@ -72,6 +77,7 @@ class Tableau extends Phaser.Scene {
         this.physics.add.collider(this.balle,this.droite, function(){
             console.log("touche droit");
             me.rebond(me.droite);
+            this.son();
         });
 
         this.physics.add.collider(this.balle,this.droite);
@@ -83,6 +89,10 @@ class Tableau extends Phaser.Scene {
         this.balleAucentre();
 
         this.initKeyboard();
+    }
+
+    son(){
+        this.poc.play()
     }
 
 
