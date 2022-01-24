@@ -1,7 +1,7 @@
 body{
     font-family: Impact, sans-serif;
     font-size: 14px;
-    background-color: #7c1717;
+    background-color: #ff3d00;
     text-align: center;
     background-image:url(https://img.freepik.com/free-vector/tennis-ball-illustration_153563-1393.jpg?size=338&ext=jpg);
     background-position:100% 0%;
@@ -31,6 +31,7 @@ a:visited{
 }
 canvas{
     outline: 1px solid #333;
+    border : 3mm ridge rgb(252, 228, 73);
 }
 #scores{
     color: #aa00ff;
@@ -46,7 +47,7 @@ canvas{
     color: #ffffff
 }
 .name{
-    font-size: 3vw;
+    font-size: 2vw;
 }
 
 #scores >* {
