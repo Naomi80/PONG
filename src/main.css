@@ -21,7 +21,7 @@ a:hover{
     text-decoration: underline;
 }
 a:visited{
-    color: #880000;
+    color: #ffffff;
 }
 #game{
     margin-bottom: 10px;
@@ -33,7 +33,7 @@ a:visited{
 }
 canvas{
     outline: 1px solid #333;
-    border : 3mm ridge rgb(252, 228, 73);
+    border : 4mm ridge rgb(165, 73, 252);
 }
 #scores{
     color: #aa00ff;

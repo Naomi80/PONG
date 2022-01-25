@@ -5,6 +5,7 @@ class Tableau extends Phaser.Scene {
         this.load.image('cercle', 'assets/cercle.png');
         this.load.image('carre', 'assets/carre.png');
         this.load.image('raquette', 'assets/raquette.png');
+        this.load.image('raquette2', 'assets/raquette2.png');
 
         this.load.audio('applause', 'assets/son/applause.mp3')
         this.load.audio('poc', 'assets/son/poc.mp3')
@@ -54,7 +55,7 @@ class Tableau extends Phaser.Scene {
         this.gauche.setImmovable(true);
 
 
-        this.droite = this.physics.add.sprite(0, 0,'raquette').setOrigin(0, 0);
+        this.droite = this.physics.add.sprite(0, 0,'raquette2').setOrigin(0, 0);
         this.droite.body.setAllowGravity(false);
         this.droite.setImmovable(true);
 
@@ -78,8 +79,8 @@ class Tableau extends Phaser.Scene {
 
         this.physics.add.collider(this.balle,this.droite);
 
-        this.joueurGauche = new Joueur('Jean-Mi','joueurGauche');
-        this.joueurDroite = new Joueur('Gyselle','joueurDroite');
+        this.joueurGauche = new Joueur('J1','joueurGauche');
+        this.joueurDroite = new Joueur('J2','joueurDroite');
 
         this.balleAucentre();
         this.initKeyboard();
