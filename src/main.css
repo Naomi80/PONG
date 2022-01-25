@@ -5,6 +5,8 @@ body{
     text-align: center;
     background-image:url(https://img.freepik.com/free-vector/tennis-ball-illustration_153563-1393.jpg?size=338&ext=jpg);
     background-position:100% 0%;
+    overflow:hidden;
+
 
 
 }
