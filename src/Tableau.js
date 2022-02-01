@@ -1,4 +1,7 @@
-
+let keyS;
+let keyX;
+let keyJ;
+let keyN;
 class Tableau extends Phaser.Scene {
     preload() {
         this.load.image('bg', 'assets/bg.png');
@@ -6,6 +9,7 @@ class Tableau extends Phaser.Scene {
         this.load.image('carre', 'assets/carre.png');
         this.load.image('raquette', 'assets/raquette.png');
         this.load.image('raquette2', 'assets/raquette2.png');
+        this.load.image('obstacle', 'assets/obstacle.png');
 
         this.load.audio('applause', 'assets/son/applause.mp3')
         this.load.audio('poc', 'assets/son/poc.mp3')
@@ -18,6 +22,7 @@ class Tableau extends Phaser.Scene {
     create() {
         this.hauteur=500;
         this.largeur=1000;
+        let me=this;
 
         //Son
         this.applause= this.sound.add('applause', {loop: false});
@@ -29,12 +34,7 @@ class Tableau extends Phaser.Scene {
         this.bg = this.add.image(0, 0, 'bg').setOrigin(0, 0);
 
         //Balle
-        this.balle = this.physics.add.sprite(0, 0, 'cercle').setOrigin(0, 0);
-        this.balle.setDisplaySize(20,20);
-        this.balle.body.setBounce(1.1,1.1);
-        this.balle.body.setMaxVelocityX(700);
-        this.balle.body.setMaxVelocityY(900);
-        this.balle.body.setAllowGravity(false)
+        this.Bballe = new Balle(this)
 
         //Mur haut
         this.haut = this.physics.add.sprite(0, 0,'carre').setOrigin(0, 0);
@@ -49,42 +49,36 @@ class Tableau extends Phaser.Scene {
         this.bas.setImmovable(true);
 
 
-        //Raquettes balle/murs
-        this.gauche = this.physics.add.sprite(0, 0,'raquette').setOrigin(0, 0);
-        this.gauche.body.setAllowGravity(false);
-        this.gauche.setImmovable(true);
-
-
-        this.droite = this.physics.add.sprite(0, 0,'raquette2').setOrigin(0, 0);
-        this.droite.body.setAllowGravity(false);
-        this.droite.setImmovable(true);
-
         //Collision balle/murs
-        this.physics.add.collider(this.balle,this.bas);
-        this.physics.add.collider(this.balle,this.haut);
+        this.physics.add.collider(this.Bballe.balle,this.bas);
+        this.physics.add.collider(this.Bballe.balle,this.haut);
 
-        let me = this;
-        //Collision raquettes/balle
-        this.physics.add.collider(this.balle,this.gauche, function(){
-            me.rebond(me.gauche);
-            me.son(me.gauche);
+
+
+        this.joueurGauche = new Joueur('J1','joueurGauche',this, 0);
+        this.joueurDroite = new Joueur('J2','joueurDroite', this, 0);
+
+        this.obstacle = this.physics.add.sprite(492, 0, 'obstacle').setOrigin(0, 0);
+        this.obstacle.setDisplaySize(15,110);
+        this.obstacle.setImmovable(true);
+        this.obstacle.body.setAllowGravity(false);
+        this.tweens.add({
+            targets: this.obstacle,
+            duration: 1500,
+            y: 380,
+            ease:'Sine.easeOut',
+            yoyo: true,
+            repeat: -1,
+        });
+        this.physics.add.collider(this.Bballe.balle,this.obstacle, function(){
+            me.rebond(me.obstacle);
         });
 
-        this.physics.add.collider(this.balle,this.gauche);
-
-        this.physics.add.collider(this.balle,this.droite, function(){
-            me.rebond(me.droite);
-            me.son(me.droite);
-        });
-
-        this.physics.add.collider(this.balle,this.droite);
-
-        this.joueurGauche = new Joueur('J1','joueurGauche');
-        this.joueurDroite = new Joueur('J2','joueurDroite');
+        this.physics.add.collider(this.Bballe.balle, this.obstacle);
 
         this.balleAucentre();
         this.initKeyboard();
-        this.raquetteAucentre()
+        this.raquetteAucentre();
     }
 
 
@@ -94,35 +88,31 @@ class Tableau extends Phaser.Scene {
 
 
     rebond(raquette){
-
-
-        let me=this;
-
         let hauteurRaquette = raquette.displayHeight;
 
-        let positionRelativeRaquette =(this.balle.y-raquette.y);
+        let positionRelativeRaquette =(this.Bballe.balle.y-raquette.y);
 
         positionRelativeRaquette = (positionRelativeRaquette/hauteurRaquette);
 
         positionRelativeRaquette = (positionRelativeRaquette*2-1);
 
-        this.balle.setVelocityY( this.balle.body.velocity.y + positionRelativeRaquette * hauteurRaquette)
+        this.Bballe.balle.setVelocityY( this.Bballe.balle.body.velocity.y + positionRelativeRaquette * hauteurRaquette)
     }
 
     balleAucentre(){
-        this.balle.x = this.largeur/2
-        this.balle.y = this.hauteur/2
-        this.balle.setVelocityX(0)
-        this.balle.setVelocityY(0)
-        this.balle.setVelocityX(Math.random()>0.5?-100:100)
+        this.Bballe.balle.x = this.largeur/2
+        this.Bballe.balle.y = this.hauteur/2
+        this.Bballe.balle.setVelocityX(0)
+        this.Bballe.balle.setVelocityY(0)
+        this.Bballe.balle.setVelocityX(Math.random()>0.5?-100:100)
     }
 
     raquetteAucentre(){
-        this.gauche.x = 10
-        this.gauche.y = this.hauteur/2-50
+        this.joueurGauche.raquette.x = 10
+        this.joueurGauche.raquette.y = this.hauteur/2-50
 
-        this.droite.x = this.largeur-30
-        this.droite.y = this.hauteur/2-50
+        this.joueurDroite.raquette.x = this.largeur-30
+        this.joueurDroite.raquette.y = this.hauteur/2-50
     }
 
     win(joueur){
@@ -134,66 +124,71 @@ class Tableau extends Phaser.Scene {
 
     initKeyboard() {
         let me = this;
-        this.input.keyboard.on('keyup', function (kevent) {
-            switch (kevent.keyCode) {
-                case Phaser.Input.Keyboard.KeyCodes.S:
-                    me.gauche.setVelocityY(0);
-                    break;
-                case Phaser.Input.Keyboard.KeyCodes.J:
-                    me.droite.setVelocityY(0);
-                    break;
-                case Phaser.Input.Keyboard.KeyCodes.X:
-                    me.gauche.setVelocityY(0);
-                    break;
-                case Phaser.Input.Keyboard.KeyCodes.N:
-                    me.droite.setVelocityY(0);
-                    break;
+        keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+        keyJ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
+        keyN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N);
+
+        if (keyS.isUp)
+        {
+            me.joueurGauche.raquette.setVelocityY(0);
+        }
+        if (keyJ.isUp)
+        {
+            me.joueurDroite.raquette.setVelocityY(0);
+        }
+        if (keyX.isUp)
+        {
+            me.joueurGauche.raquette.setVelocityY(0);
+        }
+        if (keyN.isUp)
+        {
+            me.joueurDroite.raquette.setVelocityY(0);
+        }
+
+        if (keyS.isDown)
+        {
+            if (me.joueurGauche.raquette.y<me.haut.y + 20){
+                me.joueurGauche.raquette.setVelocityY(0)
             }
-        })
-        this.input.keyboard.on('keydown', function (kevent) {
-            switch (kevent.keyCode) {
-                case Phaser.Input.Keyboard.KeyCodes.S:
-
-                    me.gauche.setVelocityY(-300);
-
-                    break;
-                case Phaser.Input.Keyboard.KeyCodes.J:
-
-                    me.droite.setVelocityY(-300);
-
-                    break;
-                case Phaser.Input.Keyboard.KeyCodes.X:
-
-                    me.gauche.setVelocityY(300);
-
-                    break;
-                case Phaser.Input.Keyboard.KeyCodes.N:
-
-                    me.droite.setVelocityY(300);
-
-                    break;
+            else{
+                me.joueurGauche.raquette.setVelocityY(-300);
             }
-        })
+        }
+        if (keyX.isDown)
+        {
+            if (me.joueurGauche.raquette.y+100>me.bas.y-5){
+                me.joueurGauche.raquette.setVelocityY(0)
+            }
+            else {
+                me.joueurGauche.raquette.setVelocityY(300);
+            }
+        }
+        if (keyJ.isDown)
+        {
+            if (me.joueurDroite.raquette.y<me.haut.y + 20){
+                me.joueurDroite.raquette.setVelocityY(0)
+            }
+            else{
+                me.joueurDroite.raquette.setVelocityY(-300);
+            }
+        }
+        if (keyN.isDown)
+        {
+            if (me.joueurDroite.raquette.y+100>me.bas.y-5){
+                me.joueurDroite.raquette.setVelocityY(0)
+            }
+            else {
+                me.joueurDroite.raquette.setVelocityY(300);
+            }
+        }
     }
     update() {
 
-        if(this.gauche.y<this.haut.y+20){
-            this.gauche.y=this.haut.y+20
-        }
-        if(this.gauche.y>this.bas.y-100){
-            this.gauche.y=this.bas.y-100
-        }
-        if(this.droite.y<this.haut.y+20){
-            this.droite.y=this.haut.y+20
-        }
-        if(this.droite.y>this.bas.y-100){
-            this.droite.y=this.bas.y-100
-        }
-
-        if(this.balle.x>this.largeur){
+        if(this.Bballe.balle.x>this.largeur){
             this.win(this.joueurGauche);
         }
-        if(this.balle.x<0){
+        if(this.Bballe.balle.x<0){
             this.win(this.joueurDroite);
         }
         this.initKeyboard();
